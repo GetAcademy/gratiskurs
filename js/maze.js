@@ -160,15 +160,16 @@ class MazeCanvas extends HTMLElement {
             console.log(isOpenUp, isOpenRight, isOpenDown, isOpenLeft, tileKey, imageName);
         }
 
-        if (isOpenUp) {
+        if (isOpenUp ) {
             const wallX = x;
-            const wallY = y - model.cornerSize; // Flytt opp for å tegne mellomrommet
+            const deltaY = isOpenUp ? 0 : model.wallSize;
+            const wallY = y - model.cornerSize + deltaY; // Flytt opp for å tegne mellomrommet
             const wallWidth = model.wallSize;
             const wallHeight = model.cornerSize; // Kun de øverste 16 pikslene
 
             const upDownImage = images['up-down'];
             if (upDownImage) {
-                this.ctx.drawImage(upDownImage, 0, 6, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
+                this.ctx.drawImage(upDownImage, 0, 15, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
             }
         }
 
