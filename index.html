@@ -10,12 +10,20 @@
 
 <body>
     <maze-canvas size="6"></maze-canvas>
+    <button onclick="gå()">gå</button>
+    <button onclick="snuHøyre()">snu høyre</button>
+    <button onclick="snuHøyre();snuHøyre();snuHøyre()">snu venstre</button>
     <script>
         const maze = document.querySelector('maze-canvas');
         const gå = maze.gå.bind(maze);
         const snuHøyre = maze.snuHøyre.bind(maze);
 
-        const imageNames = ['closed-down','closed-right','closed-up','closed-left','down-left','down','left-right','left','open','right-down','right','up-down','up-left','up-right','up'];
+        const imageNames = [
+            'closed-down','closed-right','closed-up','closed-left',
+            'down-left','down','left-right','left',
+            'open','right-down','right','up-down','up-left','up-right','up',
+            'robot-down','robot-left','robot-right','robot-up'        
+        ];
         let images = {};
         let loadedImages = 0;
 

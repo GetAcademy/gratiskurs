@@ -116,25 +116,15 @@ class MazeCanvas extends HTMLElement {
         let x = this.calcWallSize(colIndex) + 1.5 * model.cornerSize;
         let y = this.calcWallSize(rowIndex) + 1.5 * model.cornerSize;
         const size = model.wallSize - model.cornerSize;
-        ctx.beginPath();
         if (model.character.direction == 'høyre') {
-            ctx.moveTo(x, y);
-            ctx.lineTo(x + size, y + size / 2);
-            ctx.lineTo(x, y + size);
+            ctx.drawImage(images['robot-right'], x, y, size, size);
         } else if (model.character.direction == 'venstre') {
-            ctx.moveTo(x, y + size / 2);
-            ctx.lineTo(x + size, y);
-            ctx.lineTo(x + size, y + size);
+            ctx.drawImage(images['robot-left'], x, y, size, size);
         } else if (model.character.direction == 'opp') {
-            ctx.moveTo(x + size / 2, y);
-            ctx.lineTo(x, y + size);
-            ctx.lineTo(x + size, y + size);
+            ctx.drawImage(images['robot-up'], x, y, size, size);
         } else if (model.character.direction == 'ned') {
-            ctx.moveTo(x, y);
-            ctx.lineTo(x + size, y);
-            ctx.lineTo(x + size / 2, y + size);
+            ctx.drawImage(images['robot-down'], x, y, size, size);
         }
-        ctx.fill();
     }
 
     drawSquare(roomIndex) {
