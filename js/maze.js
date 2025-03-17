@@ -37,7 +37,6 @@ class MazeCanvas extends HTMLElement {
         this.canvas.setAttribute('width', model.pixels);
         this.canvas.setAttribute('height', model.pixels);
         this.generateLabyrinth();
-        this.drawLabyrinth();
     }
 
     generateLabyrinth() {
@@ -86,7 +85,7 @@ class MazeCanvas extends HTMLElement {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = fillStyle;
         for (let roomIndex = 0; roomIndex < model.roomCount; roomIndex++) {
-            this.drawRoom(roomIndex);
+            this.drawSquare(roomIndex);
         }
         this.drawCharacter();
     }
@@ -120,7 +119,7 @@ class MazeCanvas extends HTMLElement {
         ctx.fill();
     }
 
-    drawRoom(roomIndex) {
+    drawSquare(roomIndex) {
         const model = this.model;
         const rowIndex = Math.floor(roomIndex / model.labyrinthSize);
         const colIndex = roomIndex % model.labyrinthSize;

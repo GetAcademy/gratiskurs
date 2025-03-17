@@ -19,8 +19,27 @@
         const maze = document.querySelector('maze-canvas');
         const gå = maze.gå.bind(maze);
         const snuHøyre = maze.snuHøyre.bind(maze);
+
+        const imageNames = ['down', 'left', 'right', 'up'];
+        let images = {};
+        let loadedImages = 0;
+
+        for (let fileName of imageNames) {
+            const img = new Image();
+            img.src = `img/${fileName}.png`;
+            img.onload = () => {
+                loadedImages++;
+                if (loadedImages === imageNames.length) {
+                    maze.drawLabyrinth();
+                }
+            };
+            img.onerror = () => {
+                console.error(`Feil ved lasting av bilde: ${url}`);
+            };
+            images[fileName] = img;
+        }
     </script>
-    <
+
 </body>
 
 </html>
