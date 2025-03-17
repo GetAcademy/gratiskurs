@@ -12,7 +12,7 @@ class MazeCanvas extends HTMLElement {
         this.ctx = this.canvas.getContext("2d");
         const model = this.model = {};
         model.labyrinthSize = parseInt(this.getAttribute('size'));
-        model.cornerSize = 20;
+        model.cornerSize = 16;
         model.wallToCornerRatio = 4;
         model.directions = ['opp', 'ned', 'høyre', 'venstre'];
         model.oppositeDirection = {
@@ -81,6 +81,10 @@ class MazeCanvas extends HTMLElement {
     drawLabyrinth() {
         const model = this.model;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const fillStyle = this.ctx.fillStyle;
+        this.ctx.fillStyle = '#47ABA9';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = fillStyle;
         for (let roomIndex = 0; roomIndex < model.roomCount; roomIndex++) {
             this.drawRoom(roomIndex);
         }
