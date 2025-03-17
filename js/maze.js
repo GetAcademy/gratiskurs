@@ -141,16 +141,6 @@ class MazeCanvas extends HTMLElement {
         const model = this.model;
         const rowIndex = Math.floor(roomIndex / model.labyrinthSize);
         const colIndex = roomIndex % model.labyrinthSize;
-        const isFirstCol = colIndex == 0;
-        const isFirstRow = rowIndex == 0;
-        // if (isFirstRow) this.drawWall(rowIndex, colIndex, roomIndex, 'opp');
-        // if (isFirstCol) this.drawWall(rowIndex, colIndex, roomIndex, 'venstre');
-        // this.drawWall(rowIndex, colIndex, roomIndex, 'høyre');
-        // this.drawWall(rowIndex, colIndex, roomIndex, 'ned');
-        // this.drawCorner(rowIndex, colIndex, 0, 0);
-        // this.drawCorner(rowIndex, colIndex, 0, 1);
-        // this.drawCorner(rowIndex, colIndex, 1, 0);
-        // this.drawCorner(rowIndex, colIndex, 1, 1);
 
         let x = this.calcWallSize(colIndex) + model.cornerSize;
         let y = this.calcWallSize(rowIndex) + model.cornerSize;
@@ -168,35 +158,6 @@ class MazeCanvas extends HTMLElement {
         else {
             console.log(isOpenUp, isOpenRight, isOpenDown, isOpenLeft, tileKey, imageName);
         }
-    }
-
-    drawWall(rowIndex, colIndex, roomIndex, direction) {
-        const model = this.model;
-        const doorKey = direction + roomIndex;
-        if (model.openWalls[doorKey]) return;
-        const isDoorHorizontal = direction == 'opp' || direction == 'ned';
-        let x = this.calcWallSize(colIndex);
-        let y = this.calcWallSize(rowIndex);
-        if (direction == 'opp') { x += model.cornerSize; }
-        if (direction == 'venstre') { y += model.cornerSize; }
-        if (direction == 'høyre') {
-            x += model.wallSize + model.cornerSize;
-            y += model.cornerSize;
-        }
-        if (direction == 'ned') {
-            y += model.wallSize + model.cornerSize;
-            x += model.cornerSize;
-        }
-        const width = isDoorHorizontal ? model.wallSize : model.cornerSize;
-        const height = isDoorHorizontal ? model.cornerSize : model.wallSize;
-        this.ctx.fillRect(x, y, width, height);
-    }
-
-    drawCorner(rowIndex, colIndex, addX, addY) {
-        const model = this.model;
-        let x = this.calcWallSize(colIndex) + addX * (model.cornerSize + model.wallSize);
-        let y = this.calcWallSize(rowIndex) + addY * (model.cornerSize + model.wallSize);
-        this.ctx.fillRect(x, y, model.cornerSize, model.cornerSize);
     }
 
     calcWallSize(index) {
