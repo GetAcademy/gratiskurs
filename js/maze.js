@@ -168,23 +168,10 @@ class MazeCanvas extends HTMLElement {
 
             const upDownImage = images['up-down'];
             if (upDownImage) {
-                this.ctx.drawImage(upDownImage, 0, 0, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
+                this.ctx.drawImage(upDownImage, 0, 6, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
             }
         }
 
-        if (isOpenDown) {
-            const wallX = x;
-            const wallY = y + model.wallSize; // Plasser under
-            const wallWidth = model.wallSize;
-            const wallHeight = model.cornerSize;
-
-            const upDownImage = images['up-down'];
-            if (upDownImage) {
-                this.ctx.drawImage(upDownImage, 0, 0, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
-            }
-        }
-
-        // Tegn horisontal åpning mellom to ruter hvis veggen er åpen til venstre
         if (isOpenLeft) {
             const wallX = x - model.cornerSize; // Flytt til venstre
             const wallY = y;
@@ -196,20 +183,6 @@ class MazeCanvas extends HTMLElement {
                 this.ctx.drawImage(leftRightImage, 0, 0, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
             }
         }
-
-        // Tegn horisontal åpning mellom to ruter hvis veggen er åpen til høyre
-        if (isOpenRight) {
-            const wallX = x + model.wallSize; // Flytt til høyre
-            const wallY = y;
-            const wallWidth = model.cornerSize; // Kun de høyre 16 pikslene
-            const wallHeight = model.wallSize;
-
-            const leftRightImage = images['left-right'];
-            if (leftRightImage) {
-                this.ctx.drawImage(leftRightImage, 0, 0, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
-            }
-        }
-
     }
 
     calcWallSize(index) {
