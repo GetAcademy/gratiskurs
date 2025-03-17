@@ -133,6 +133,10 @@ class MazeCanvas extends HTMLElement {
         this.drawCorner(rowIndex, colIndex, 0, 1);
         this.drawCorner(rowIndex, colIndex, 1, 0);
         this.drawCorner(rowIndex, colIndex, 1, 1);
+
+        let x = this.calcWallSize(colIndex) + model.cornerSize;
+        let y = this.calcWallSize(rowIndex) + model.cornerSize;
+        this.ctx.drawImage(images['down'], x, y);
     }
 
     drawWall(rowIndex, colIndex, roomIndex, direction) {
