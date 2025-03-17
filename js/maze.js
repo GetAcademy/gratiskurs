@@ -2,6 +2,24 @@ class MazeCanvas extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.tileMap = {
+            0b0001: 'left',         // Kun venstre åpent
+            0b0010: 'down',         // Kun ned åpent
+            0b0011: 'down-left',    // Ned og venstre åpent
+            0b0100: 'right',        // Kun høyre åpent
+            0b0101: 'left-right',   // Venstre og høyre åpent
+            0b0110: 'right-down',   // Høyre og ned åpent
+            0b0111: 'closed-up',    // Opp lukket
+            0b1000: 'up',           // Kun opp åpent
+            0b1001: 'up-left',      // Opp og venstre åpent
+            0b1010: 'up-down',      // Opp og ned åpent
+            0b1011: 'closed-right', // Høyre lukket
+            0b1100: 'up-right',     // Opp og høyre åpent
+            0b1101: 'closed-down',  // Ned lukket
+            0b1110: 'closed-left',  // Venstre lukket
+            0b1111: 'open',         // Alle fire veggene er åpne
+        };
+        
     }
 
     connectedCallback() {
@@ -136,7 +154,20 @@ class MazeCanvas extends HTMLElement {
 
         let x = this.calcWallSize(colIndex) + model.cornerSize;
         let y = this.calcWallSize(rowIndex) + model.cornerSize;
-        this.ctx.drawImage(images['down'], x, y);
+
+        const isOpenUp = model.openWalls['opp' + roomIndex] || false;
+        const isOpenRight = model.openWalls['høyre' + roomIndex] || false;
+        const isOpenDown = model.openWalls['ned' + roomIndex] || false;
+        const isOpenLeft = model.openWalls['venstre' + roomIndex] || false;
+       
+        const tileKey = (isOpenUp << 3) | (isOpenRight << 2) | (isOpenDown << 1) | (isOpenLeft << 0);
+        const imageName = this.tileMap[tileKey];
+        
+        const image = images[imageName];
+        if(image)this.ctx.drawImage(image, x, y);
+        else {
+            console.log(isOpenUp, isOpenRight, isOpenDown, isOpenLeft, tileKey, imageName);
+        }
     }
 
     drawWall(rowIndex, colIndex, roomIndex, direction) {
