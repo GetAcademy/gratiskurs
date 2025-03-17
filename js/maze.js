@@ -160,10 +160,9 @@ class MazeCanvas extends HTMLElement {
             console.log(isOpenUp, isOpenRight, isOpenDown, isOpenLeft, tileKey, imageName);
         }
 
-        if (isOpenUp ) {
+        if (isOpenUp || isOpenDown) {
             const wallX = x;
-            const deltaY = isOpenUp ? 0 : model.wallSize;
-            const wallY = y - model.cornerSize + deltaY; // Flytt opp for å tegne mellomrommet
+            const wallY = isOpenDown ? y + model.wallSize : y - model.cornerSize; 
             const wallWidth = model.wallSize;
             const wallHeight = model.cornerSize; // Kun de øverste 16 pikslene
 
