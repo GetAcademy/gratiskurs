@@ -19,23 +19,29 @@
         const snuHøyre = maze.snuHøyre.bind(maze);
 
         const imageNames = [
-            'closed-down','closed-right','closed-up','closed-left',
-            'down-left','down','left-right','left',
-            'open','right-down','right','up-down','up-left','up-right','up',
-            'robot-down','robot-left','robot-right','robot-up'        
+            'closed-down', 'closed-right', 'closed-up', 'closed-left',
+            'down-left', 'down', 'left-right', 'left',
+            'open', 'right-down', 'right', 'up-down', 'up-left', 'up-right', 'up',
+            'robot-down', 'robot-left', 'robot-right', 'robot-up'
         ];
         let images = {};
         let loadedImages = 0;
+        const handleLoadedImg = () => {
+            loadedImages++;
+            if (loadedImages === imageNames.length) {
+                maze.drawLabyrinth();
+            }
+        };
 
+        loadImg('img/get.gif')
         for (let fileName of imageNames) {
+            loadImg(`img/${fileName}.png`);
+        }
+
+        function loadImg(url) {
             const img = new Image();
-            img.src = `img/${fileName}.png`;
-            img.onload = () => {
-                loadedImages++;
-                if (loadedImages === imageNames.length) {
-                    maze.drawLabyrinth();
-                }
-            };
+            img.src = url;
+            img.onload = handleLoadedImg
             img.onerror = () => {
                 console.error(`Feil ved lasting av bilde: ${url}`);
             };
