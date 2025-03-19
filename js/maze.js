@@ -48,11 +48,12 @@ class MazeCanvas extends HTMLElement {
         model.commandQueue = [];
         this.timer = null;
 
+        const getImgWidth = 133;
         model.roomCount = model.labyrinthSize * model.labyrinthSize;
         model.openWalls['opp0'] = true;
         model.openWalls['ned' + (model.roomCount - 1)] = true;
         model.pixels = this.calcWallSize(model.labyrinthSize + 1);
-        this.canvas.setAttribute('width', model.pixels);
+        this.canvas.setAttribute('width', model.pixels + getImgWidth);
         this.canvas.setAttribute('height', model.pixels);
         this.generateLabyrinth();
     }
@@ -106,6 +107,9 @@ class MazeCanvas extends HTMLElement {
             this.drawSquare(roomIndex);
         }
         this.drawCharacter();
+        let x = this.calcWallSize(this.model.labyrinthSize);
+        let y = this.calcWallSize(7);
+        this.ctx.drawImage(images.get, x, y, 133, 144);
     }
 
     drawCharacter() {
@@ -152,7 +156,7 @@ class MazeCanvas extends HTMLElement {
 
         if (isOpenUp || isOpenDown) {
             const wallX = x;
-            const wallY = isOpenDown ? y + model.wallSize : y - model.cornerSize; 
+            const wallY = isOpenDown ? y + model.wallSize : y - model.cornerSize;
             const wallWidth = model.wallSize;
             const wallHeight = model.cornerSize; // Kun de øverste 16 pikslene
 

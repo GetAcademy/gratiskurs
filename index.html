@@ -26,26 +26,26 @@
         ];
         let images = {};
         let loadedImages = 0;
-        const handleLoadedImg = () => {
+        function handleLoadedImg() {
             loadedImages++;
-            if (loadedImages === imageNames.length) {
+            if (loadedImages === imageNames.length + 1) {
                 maze.drawLabyrinth();
             }
         };
 
-        loadImg('img/get.gif')
+        loadImg('img/get.png', 'get');
         for (let fileName of imageNames) {
-            loadImg(`img/${fileName}.png`);
+            loadImg(`img/${fileName}.png`, fileName);
         }
 
-        function loadImg(url) {
+        function loadImg(url, name) {
             const img = new Image();
             img.src = url;
-            img.onload = handleLoadedImg
+            img.onload = handleLoadedImg;
             img.onerror = () => {
                 console.error(`Feil ved lasting av bilde: ${url}`);
             };
-            images[fileName] = img;
+            images[name] = img;
         }
     </script>
 
