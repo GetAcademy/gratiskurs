@@ -56,6 +56,9 @@ class MazeCanvas extends HTMLElement {
         this.canvas.setAttribute('width', model.pixels + getImgWidth);
         this.canvas.setAttribute('height', model.pixels);
         this.generateLabyrinth();
+
+        this.offsetX = -24;
+        this.offsetY = model.wallSize;
     }
 
     generateLabyrinth() {
@@ -108,19 +111,19 @@ class MazeCanvas extends HTMLElement {
         }
         let max = this.calcWallSize(this.model.labyrinthSize - 1) + 16;
         let min = this.calcWallSize(0);
-        this.ctx.drawImage(images['start'], min + 16, min);
-        this.ctx.drawImage(images['end-empty'], max, min);
+        const y = 0;
+        this.ctx.drawImage(images['start'], min + 16 + this.offsetX, y);
+        this.ctx.drawImage(images['end-empty'], max + this.offsetX, y);
         this.drawCharacter();
     }
 
     drawCharacter() {
         const ctx = this.ctx;
-        const model = this.model;
-        const offsetY = model.wallSize + model.cornerSize;
+        const model = this.model;        
         const rowIndex = Math.floor(model.character.roomIndex / model.labyrinthSize);
         const colIndex = model.character.roomIndex % model.labyrinthSize;
-        let x = this.calcWallSize(colIndex) + 1.5 * model.cornerSize;
-        let y = this.calcWallSize(rowIndex) + offsetY - model.cornerSize;
+        let x = this.calcWallSize(colIndex) + 1.5 * model.cornerSize + this.offsetX;
+        let y = this.calcWallSize(rowIndex) + this.offsetY - model.cornerSize;
         const size = model.wallSize - model.cornerSize;
         if (model.character.direction == 'høyre') {
             ctx.drawImage(images['robot-right'], x, y, size, size);
@@ -135,12 +138,11 @@ class MazeCanvas extends HTMLElement {
 
     drawSquare(roomIndex) {
         const model = this.model;
-        const offsetY = model.wallSize + model.cornerSize;
         const rowIndex = Math.floor(roomIndex / model.labyrinthSize);
         const colIndex = roomIndex % model.labyrinthSize;
 
-        let x = this.calcWallSize(colIndex) + model.cornerSize;
-        let y = this.calcWallSize(rowIndex) - model.cornerSize + offsetY;
+        let x = this.calcWallSize(colIndex) + model.cornerSize + this.offsetX;
+        let y = this.calcWallSize(rowIndex) - model.cornerSize + this.offsetY;
 
         const isOpenUp = model.openWalls['opp' + roomIndex] || false;
         const isOpenRight = model.openWalls['høyre' + roomIndex] || false;
@@ -153,7 +155,7 @@ class MazeCanvas extends HTMLElement {
             const variant = ((rowIndex + colIndex) % 4) + 1;
             imageName += variant;
         } else if (imageName == 'left-right') {
-            const variant = ((rowIndex + colIndex*2) % 4) + 1;
+            const variant = ((rowIndex + colIndex * 2) % 4) + 1;
             imageName += variant;
         }
 
