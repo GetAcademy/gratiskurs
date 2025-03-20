@@ -51,7 +51,7 @@ class MazeCanvas extends HTMLElement {
         const getImgWidth = 133;
         model.roomCount = model.labyrinthSize * model.labyrinthSize;
         model.openWalls['opp0'] = true;
-        model.openWalls['ned' + (model.roomCount - 1)] = true;
+        model.openWalls['opp' + (model.labyrinthSize - 1)] = true;
         model.pixels = this.calcWallSize(model.labyrinthSize + 1);
         this.canvas.setAttribute('width', model.pixels + getImgWidth);
         this.canvas.setAttribute('height', model.pixels);
@@ -100,25 +100,27 @@ class MazeCanvas extends HTMLElement {
         const model = this.model;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const fillStyle = this.ctx.fillStyle;
-        this.ctx.fillStyle = '#47ABA9';
+        this.ctx.fillStyle = '#64A853';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = fillStyle;
         for (let roomIndex = 0; roomIndex < model.roomCount; roomIndex++) {
             this.drawSquare(roomIndex);
         }
+        let max = this.calcWallSize(this.model.labyrinthSize - 1) + 16;
+        let min = this.calcWallSize(0);
+        this.ctx.drawImage(images['start'], min + 16, min);
+        this.ctx.drawImage(images['end-empty'], max, min);
         this.drawCharacter();
-        let x = this.calcWallSize(this.model.labyrinthSize);
-        let y = this.calcWallSize(7);
-        this.ctx.drawImage(images.get, x, y, 133, 144);
     }
 
     drawCharacter() {
         const ctx = this.ctx;
         const model = this.model;
+        const offsetY = model.wallSize + model.cornerSize; 
         const rowIndex = Math.floor(model.character.roomIndex / model.labyrinthSize);
         const colIndex = model.character.roomIndex % model.labyrinthSize;
         let x = this.calcWallSize(colIndex) + 1.5 * model.cornerSize;
-        let y = this.calcWallSize(rowIndex) + 1.5 * model.cornerSize;
+        let y = this.calcWallSize(rowIndex) + offsetY;
         const size = model.wallSize - model.cornerSize;
         if (model.character.direction == 'høyre') {
             ctx.drawImage(images['robot-right'], x, y, size, size);
@@ -133,11 +135,12 @@ class MazeCanvas extends HTMLElement {
 
     drawSquare(roomIndex) {
         const model = this.model;
+        const offsetY = model.wallSize + model.cornerSize;
         const rowIndex = Math.floor(roomIndex / model.labyrinthSize);
         const colIndex = roomIndex % model.labyrinthSize;
 
         let x = this.calcWallSize(colIndex) + model.cornerSize;
-        let y = this.calcWallSize(rowIndex) + model.cornerSize;
+        let y = this.calcWallSize(rowIndex) - model.cornerSize + offsetY;
 
         const isOpenUp = model.openWalls['opp' + roomIndex] || false;
         const isOpenRight = model.openWalls['høyre' + roomIndex] || false;
@@ -145,7 +148,11 @@ class MazeCanvas extends HTMLElement {
         const isOpenLeft = model.openWalls['venstre' + roomIndex] || false;
 
         const tileKey = (isOpenUp << 3) | (isOpenRight << 2) | (isOpenDown << 1) | (isOpenLeft << 0);
-        const imageName = this.tileMap[tileKey];
+        let imageName = this.tileMap[tileKey];
+        if (imageName == 'up-down') {
+            const variant = ((rowIndex + colIndex) % 3) + 1;
+            imageName += variant;
+        }
 
         const image = images[imageName];
         if (image) {
@@ -160,7 +167,7 @@ class MazeCanvas extends HTMLElement {
             const wallWidth = model.wallSize;
             const wallHeight = model.cornerSize; // Kun de øverste 16 pikslene
 
-            const upDownImage = images['up-down'];
+            const upDownImage = images['up-down1'];
             if (upDownImage) {
                 this.ctx.drawImage(upDownImage, 0, 15, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
             }
