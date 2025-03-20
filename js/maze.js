@@ -48,16 +48,15 @@ class MazeCanvas extends HTMLElement {
         model.commandQueue = [];
         this.timer = null;
 
-        const getImgWidth = 133;
         model.roomCount = model.labyrinthSize * model.labyrinthSize;
         model.openWalls['opp0'] = true;
         model.openWalls['opp' + (model.labyrinthSize - 1)] = true;
-        model.pixels = this.calcWallSize(model.labyrinthSize + 1);
-        this.canvas.setAttribute('width', model.pixels + getImgWidth);
-        this.canvas.setAttribute('height', model.pixels);
+        model.pixels = this.calcWallSize(model.labyrinthSize);
+        this.canvas.setAttribute('width', model.pixels);
+        this.canvas.setAttribute('height', model.pixels + model.cornerSize*3);
         this.generateLabyrinth();
 
-        this.offsetX = -24;
+        this.offsetX = -20;
         this.offsetY = model.wallSize;
     }
 
