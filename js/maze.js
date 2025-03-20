@@ -152,6 +152,9 @@ class MazeCanvas extends HTMLElement {
         if (imageName == 'up-down') {
             const variant = ((rowIndex + colIndex) % 4) + 1;
             imageName += variant;
+        } else if (imageName == 'left-right') {
+            const variant = ((rowIndex + colIndex*2) % 4) + 1;
+            imageName += variant;
         }
 
         const image = images[imageName];
@@ -179,7 +182,7 @@ class MazeCanvas extends HTMLElement {
             const wallWidth = model.cornerSize; // Kun de venstre 16 pikslene
             const wallHeight = model.wallSize;
 
-            const leftRightImage = images['left-right'];
+            const leftRightImage = images['left-right1'];
             if (leftRightImage) {
                 this.ctx.drawImage(leftRightImage, 0, 0, wallWidth, wallHeight, wallX, wallY, wallWidth, wallHeight);
             }
