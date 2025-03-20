@@ -116,7 +116,7 @@ class MazeCanvas extends HTMLElement {
     drawCharacter() {
         const ctx = this.ctx;
         const model = this.model;
-        const offsetY = model.wallSize + model.cornerSize; 
+        const offsetY = model.wallSize + model.cornerSize;
         const rowIndex = Math.floor(model.character.roomIndex / model.labyrinthSize);
         const colIndex = model.character.roomIndex % model.labyrinthSize;
         let x = this.calcWallSize(colIndex) + 1.5 * model.cornerSize;
@@ -150,7 +150,7 @@ class MazeCanvas extends HTMLElement {
         const tileKey = (isOpenUp << 3) | (isOpenRight << 2) | (isOpenDown << 1) | (isOpenLeft << 0);
         let imageName = this.tileMap[tileKey];
         if (imageName == 'up-down') {
-            const variant = ((rowIndex + colIndex) % 3) + 1;
+            const variant = ((rowIndex + colIndex) % 4) + 1;
             imageName += variant;
         }
 
