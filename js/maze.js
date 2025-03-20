@@ -120,7 +120,7 @@ class MazeCanvas extends HTMLElement {
         const rowIndex = Math.floor(model.character.roomIndex / model.labyrinthSize);
         const colIndex = model.character.roomIndex % model.labyrinthSize;
         let x = this.calcWallSize(colIndex) + 1.5 * model.cornerSize;
-        let y = this.calcWallSize(rowIndex) + offsetY;
+        let y = this.calcWallSize(rowIndex) + offsetY - model.cornerSize;
         const size = model.wallSize - model.cornerSize;
         if (model.character.direction == 'høyre') {
             ctx.drawImage(images['robot-right'], x, y, size, size);
