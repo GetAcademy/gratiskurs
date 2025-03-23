@@ -5,25 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Smooch+Sans:wght@100..900&display=swap"
+        rel="stylesheet">
     <script src="js/maze.js"></script>
     <style>
-        body{
-            background-color: #64A853;
-            margin: 0;
-            padding: 0;
-            display: flex;            
+        * {
+            font-family: Pixelify Sans;
         }
-      
-        canvas{
-            width: 150%;
+
+        maze-canvas {
+            border-radius: 1vw;
+            border: 10px solid rgb(118, 77, 41);
+            background-color: #64A853;
+        }
+
+        .info {
+            background-color: #ececec;
+            border-radius: 1vw;
+            border: 10px solid #ececec;
+        }
+
+        .flex2 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .button {
+            background-image: url(/img/btn.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 20vw;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <maze-canvas size="6"></maze-canvas>
-    <div onclick="this.style.display = none;" style="display: none;padding: 20px; font-family: Arial, Helvetica, sans-serif;font-size: 150%;">
-        Levels: 
+    <div class="flex2">
+        <h1>Velkommen til <span style="color: #F64D01">GET Academys</span> lynkurs i programmering!</h1>
+        <div>
+            <div class="button">
+                <h1>Level 1</h1>
+            </div>
+        </div>
+    </div>
+    <div class="flex2">
+        <maze-canvas size="6"></maze-canvas>
+        <div class="info">
+            Bla bla bla
+
+        </div>
+    </div>
+    <!-- <div onclick="this.style.display = none;"
+        style="display: none;padding: 20px; font-family: Arial, Helvetica, sans-serif;font-size: 150%;">
+        Levels:
         <ol>
             <li>
                 Bygge kommandoer
@@ -38,7 +78,7 @@
                 Løkker
             </li>
         </ol>
-    </div>
+    </div> -->
     <!-- <button onclick="gå()">gå</button>
     <button onclick="snuHøyre()">snu høyre</button>
     <button onclick="snuHøyre();snuHøyre();snuHøyre()">snu venstre</button> -->
@@ -50,12 +90,12 @@
 
         const imageNames = [
             'closed-down', 'closed-right', 'closed-up', 'closed-left',
-            'down-left', 
-            'left-right1','left-right2','left-right3','left-right4',
+            'down-left',
+            'left-right1', 'left-right2', 'left-right3', 'left-right4',
             'down', 'left', 'right', 'up',
             'end-chest', 'end-empty', 'start',
-            'right-down', 
-            'up-down1', 'up-down2', 'up-down3','up-down4', 
+            'right-down',
+            'up-down1', 'up-down2', 'up-down3', 'up-down4',
             'up-left', 'up-right', 'open',
             'robot-down', 'robot-left', 'robot-right', 'robot-up',
             'arrow-up', 'arrow-down', 'arrow-left', 'arrow-right'
