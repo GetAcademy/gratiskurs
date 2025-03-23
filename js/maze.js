@@ -171,13 +171,13 @@ class MazeCanvas extends HTMLElement {
         let x = this.calcWallSize(colIndex) + model.cornerSize + this.offsetX;
         let y = this.calcWallSize(rowIndex) - model.cornerSize + this.offsetY;
         const size = model.wallSize + model.cornerSize;
-        // if (!this.shouldDraw(roomIndex)) {
-        //     const fillStyle = this.ctx.fillStyle;
-        //     this.ctx.fillStyle = 'black';
-        //     this.ctx.fillRect(x, y, size, size);
-        //     this.ctx.fillStyle = fillStyle;
-        //     return;
-        // }
+        if (!this.shouldDraw(roomIndex)) {
+            const fillStyle = this.ctx.fillStyle;
+            this.ctx.fillStyle = 'black';
+            this.ctx.fillRect(x, y, size, size);
+            this.ctx.fillStyle = fillStyle;
+            return;
+        }
         const isOpenUp = model.openWalls['opp' + roomIndex] || false;
         const isOpenRight = model.openWalls['høyre' + roomIndex] || false;
         const isOpenDown = model.openWalls['ned' + roomIndex] || false;
