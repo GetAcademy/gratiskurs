@@ -19,7 +19,7 @@ class MazeCanvas extends HTMLElement {
             0b1110: 'closed-left',  // Venstre lukket
             0b1111: 'open',         // Alle fire veggene er åpne
         };
-
+        this.visited = [true];
     }
 
     connectedCallback() {
@@ -53,7 +53,7 @@ class MazeCanvas extends HTMLElement {
         model.openWalls['opp' + (model.labyrinthSize - 1)] = true;
         model.pixels = this.calcWallSize(model.labyrinthSize);
         this.canvas.setAttribute('width', model.pixels);
-        this.canvas.setAttribute('height', model.pixels + model.cornerSize*3);
+        this.canvas.setAttribute('height', model.pixels + model.cornerSize * 3);
         this.generateLabyrinth();
 
         this.offsetX = -20;
@@ -118,7 +118,7 @@ class MazeCanvas extends HTMLElement {
 
     drawCharacter() {
         const ctx = this.ctx;
-        const model = this.model;        
+        const model = this.model;
         const rowIndex = Math.floor(model.character.roomIndex / model.labyrinthSize);
         const colIndex = model.character.roomIndex % model.labyrinthSize;
         let x = this.calcWallSize(colIndex) + 1.5 * model.cornerSize + this.offsetX;
@@ -129,7 +129,7 @@ class MazeCanvas extends HTMLElement {
             ctx.drawImage(images['arrow-right'], x + size, y + 16);
         } else if (model.character.direction == 'venstre') {
             ctx.drawImage(images['robot-left'], x, y, size, size);
-            ctx.drawImage(images['arrow-left'], x-16, y+16);
+            ctx.drawImage(images['arrow-left'], x - 16, y + 16);
         } else if (model.character.direction == 'opp') {
             ctx.drawImage(images['robot-up'], x, y, size, size);
             ctx.drawImage(images['arrow-up'], x + 16, y - 16);
@@ -139,14 +139,45 @@ class MazeCanvas extends HTMLElement {
         }
     }
 
+    shouldDraw(roomIndex) {
+        const model = this.model;
+        const rowIndex = Math.floor(roomIndex / model.labyrinthSize);
+        const colIndex = roomIndex % model.labyrinthSize;
+        return this.hasVisited(colIndex, rowIndex)
+            || this.hasVisited(colIndex - 1, rowIndex)
+            || this.hasVisited(colIndex + 1, rowIndex)
+            || this.hasVisited(colIndex - 1, rowIndex - 1)
+            || this.hasVisited(colIndex, rowIndex - 1)
+            || this.hasVisited(colIndex + 1, rowIndex - 1)
+            || this.hasVisited(colIndex - 1, rowIndex + 1)
+            || this.hasVisited(colIndex, rowIndex + 1)
+            || this.hasVisited(colIndex + 1, rowIndex + 1);
+    }
+
+    hasVisited(colIndex, rowIndex) {
+        const model = this.model;
+        if (colIndex < 0 || colIndex >= model.labyrinthSize
+            || rowIndex < 0 || rowIndex >= model.labyrinthSize) {
+            return false;
+        }
+        const roomIndex = rowIndex * model.labyrinthSize + colIndex;
+        return this.visited[roomIndex];
+    }
+
     drawSquare(roomIndex) {
         const model = this.model;
         const rowIndex = Math.floor(roomIndex / model.labyrinthSize);
         const colIndex = roomIndex % model.labyrinthSize;
-
         let x = this.calcWallSize(colIndex) + model.cornerSize + this.offsetX;
         let y = this.calcWallSize(rowIndex) - model.cornerSize + this.offsetY;
-
+        const size = model.wallSize + model.cornerSize;
+        if (!this.shouldDraw(roomIndex)) {
+            const fillStyle = this.ctx.fillStyle;
+            this.ctx.fillStyle = 'black';
+            this.ctx.fillRect(x, y, size, size);
+            this.ctx.fillStyle = fillStyle;
+            return;
+        }
         const isOpenUp = model.openWalls['opp' + roomIndex] || false;
         const isOpenRight = model.openWalls['høyre' + roomIndex] || false;
         const isOpenDown = model.openWalls['ned' + roomIndex] || false;
@@ -220,6 +251,7 @@ class MazeCanvas extends HTMLElement {
         else if (model.character.direction == 'venstre' && position.colIndex > 0) model.character.roomIndex -= 1;
         else if (model.character.direction == 'høyre' && position.colIndex < model.labyrinthSize - 1) model.character.roomIndex += 1;
         else if (model.character.direction == 'ned' && position.rowIndex < model.labyrinthSize - 1) model.character.roomIndex += model.labyrinthSize;
+        this.visited[mode.character.roomIndex] = true;
         this.drawLabyrinth();
         return true;
     }
