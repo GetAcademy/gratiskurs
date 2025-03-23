@@ -213,7 +213,7 @@ class MazeCanvas extends HTMLElement {
         }
 
         if (isOpenRight) {
-            const wallX = x + 64; 
+            const wallX = x + 64;
             const wallY = y;
             const wallWidth = model.cornerSize; // Kun de venstre 16 pikslene
             const wallHeight = model.wallSize;
@@ -242,18 +242,33 @@ class MazeCanvas extends HTMLElement {
         return model.character.direction;
     }
 
-    gå() {
+    gå(steps = 1) {
+        if (steps == -1) {
+            let stepCount = 0;
+            while (this.gåImpl() == 1) {
+                stepCount++;
+            }
+            return stepCount;
+        }
+        let stepCount = 0;
+        while (stepCount < steps && this.gåImpl() == 1 ) {
+            stepCount++;
+        }
+        return stepCount;
+    }
+
+    gåImpl() {
         const model = this.model;
-        if (!model.openWalls[model.character.direction + model.character.roomIndex]) return false;
+        if (!model.openWalls[model.character.direction + model.character.roomIndex]) return 0;
         const position = this.getRowAndCol(model.character.roomIndex);
 
         if (model.character.direction == 'opp' && position.rowIndex > 0) model.character.roomIndex -= model.labyrinthSize;
         else if (model.character.direction == 'venstre' && position.colIndex > 0) model.character.roomIndex -= 1;
         else if (model.character.direction == 'høyre' && position.colIndex < model.labyrinthSize - 1) model.character.roomIndex += 1;
         else if (model.character.direction == 'ned' && position.rowIndex < model.labyrinthSize - 1) model.character.roomIndex += model.labyrinthSize;
-        this.visited[mode.character.roomIndex] = true;
+        this.visited[model.character.roomIndex] = true;
         this.drawLabyrinth();
-        return true;
+        return 1;
     }
 
     getRowAndCol(roomIndex) {
