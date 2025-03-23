@@ -126,12 +126,16 @@ class MazeCanvas extends HTMLElement {
         const size = model.wallSize - model.cornerSize;
         if (model.character.direction == 'høyre') {
             ctx.drawImage(images['robot-right'], x, y, size, size);
+            ctx.drawImage(images['arrow-right'], x + size, y + 16);
         } else if (model.character.direction == 'venstre') {
             ctx.drawImage(images['robot-left'], x, y, size, size);
+            ctx.drawImage(images['arrow-left'], x-16, y+16);
         } else if (model.character.direction == 'opp') {
             ctx.drawImage(images['robot-up'], x, y, size, size);
+            ctx.drawImage(images['arrow-up'], x + 16, y - 16);
         } else if (model.character.direction == 'ned') {
             ctx.drawImage(images['robot-down'], x, y, size, size);
+            ctx.drawImage(images['arrow-down'], x + 16, y + size);
         }
     }
 
