@@ -6,13 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="js/maze.js"></script>
+    <style>
+        body{
+            background-color: #64A853;
+            margin: 0;
+            padding: 0;
+            display: flex;            
+        }
+      
+        canvas{
+            width: 150%;
+        }
+    </style>
 </head>
 
 <body>
     <maze-canvas size="6"></maze-canvas>
-    <button onclick="gå()">gå</button>
+    <div onclick="this.style.display = none;" style="display: none;padding: 20px; font-family: Arial, Helvetica, sans-serif;font-size: 150%;">
+        Levels: 
+        <ol>
+            <li>
+                Bygge kommandoer
+            </li>
+            <li>
+                Variabler
+            </li>
+            <li>
+                If-setninger
+            </li>
+            <li>
+                Løkker
+            </li>
+        </ol>
+    </div>
+    <!-- <button onclick="gå()">gå</button>
     <button onclick="snuHøyre()">snu høyre</button>
-    <button onclick="snuHøyre();snuHøyre();snuHøyre()">snu venstre</button>
+    <button onclick="snuHøyre();snuHøyre();snuHøyre()">snu venstre</button> -->
     <script>
         const maze = document.querySelector('maze-canvas');
         const gå = maze.gå.bind(maze);

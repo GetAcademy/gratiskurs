@@ -290,7 +290,7 @@ class MazeCanvas extends HTMLElement {
 
     erVedUtgang() {
         const model = this.model;
-        return model.character.roomIndex == model.labyrinthSize * model.labyrinthSize - 1;
+        return model.character.roomIndex == model.labyrinthSize - 1;
     }
 }
 
