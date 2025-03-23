@@ -12,8 +12,12 @@
         rel="stylesheet">
     <script src="js/maze.js"></script>
     <style>
-        * {
+        h1, h2 {
             font-family: Pixelify Sans;
+        }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         maze-canvas {
@@ -52,9 +56,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            user-select: none;
         }
-
-        .imgbtn {}
     </style>
 </head>
 
@@ -72,7 +75,6 @@
     <div class="flex2">
         <maze-canvas size="6"></maze-canvas>
         <div class="info">
-            Bla bla bla
 
         </div>
     </div>
@@ -103,6 +105,32 @@
         const gå = maze.gå.bind(maze);
         const snuHøyre = maze.snuHøyre.bind(maze);
         const erVedUtgang = maze.erVedUtgang.bind(maze);
+        const allContent = [
+            {
+                videoId: 'reaUet6DTvQ', 
+                exercise: 'Lag funksjonen <tt>snuVenstre()</tt>',
+            },
+            {
+                videoId: 'lt7K0tuKBTs',
+                exercise: 'Lag en funksjon som går så langt det er mulig i en retning, snur 180 grader og går like langt tilbake',
+            },
+            {
+                videoId: 'L3jSbUG-DdM', 
+                exercise: `Lag funksjonen <tt>følgVeggenTilHøyre()</tt>. 
+                    <ul>
+                        <li>Den snur seg mot høyre og forsøker <tt>gå()</tt> - hvis det gikk bra, er den ferdig!</li>
+                        <li>Ellers snur den seg tilbake og forsøker gå() - hvis det gikk bra, er den ferdig!</li>
+                        <li>Ellers snur den seg mot venstre og går - og er ferdig!</li>
+                    </ul>        
+                `,
+            },
+            {
+                videoId: 'oPkHyOg57UQ', 
+                exercise: `
+                    Hvis du vil lære mer programmering, les om <a href="https://getacademy.no/">GET Academy</a> og meld deg på!                
+                `,
+            },
+        ]
         updateView();
 
         function updateView() {
@@ -113,6 +141,21 @@
                 </div>
                 ${getLevelButton(1)}
             `;
+
+            const content = allContent[level-1];
+            document.querySelector('.info').innerHTML = /*HTML*/`
+                <h2>Introduksjonsvideo</h2>
+                    <iframe width="372" height="210" 
+                        src="https://www.youtube.com/embed/${content.videoId}" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    </iframe>
+                <h2>Oppgave</h2>
+                <p>
+                ${content.exercise}
+                </p>
+            `;
+
         }
 
         function getLevelButton(change) {
