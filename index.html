@@ -31,7 +31,12 @@
             background-color: #ddd;
             box-shadow: 5px 5px;
             border-radius: 1vw;
+<<<<<<< Updated upstream
             border: 10px solid #ddd;
+=======
+            border: 10px solid #ececec;
+            max-width: 40vw;
+>>>>>>> Stashed changes
         }
 
         .flex2 {
@@ -110,7 +115,8 @@
         const allContent = [
             {
                 videoId: 'reaUet6DTvQ', 
-                exercise: 'Lag funksjonen <tt>snuVenstre()</tt>',
+                videoText: 'Se videoen for å lære om de innebygde kommandoene <tt>gå()</tt> og <tt>snuHøyre()</tt> - og lære hvordan du kan sette dem sammen til nye kommandoer.',
+                exercise: 'Lag funksjonen <tt>snuVenstre()</tt>. Bruk det du har lært i videoen om hvordan du lager egne kommandoer. Hvor mange ganger må du snu til høyre - for å ha snudd til venstre?',
             },
             {
                 videoId: 'lt7K0tuKBTs',
@@ -152,15 +158,31 @@
 
             const content = allContent[level-1];
             document.querySelector('.info').innerHTML = /*HTML*/`
-                <h2>Introduksjonsvideo</h2>
-                    <iframe width="372" height="210" 
-                        src="https://www.youtube.com/embed/${content.videoId}" 
-                        title="YouTube video player" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                    </iframe>
+                <h2>Introduksjonsvideo</h2> 
+                <p> 
+                    ${content.videoText}              
+                </p>
+                <iframe width="372" height="210" 
+                    src="https://www.youtube.com/embed/${content.videoId}" 
+                    title="YouTube video player" frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                </iframe>
                 <h2>Oppgave</h2>
                 <p>
                 ${content.exercise}
+                </p>
+                <p>
+                    ${level<4
+                        ? `
+                            <div style="display: flex; flex-direction: row; align-items: center; gap: 10px">
+                                <div>
+                                    Når du har løst oppgaven, kan du gå videre til level ${level+1}:
+                                </div>
+                                <div>${getLevelButton(1)}</div>
+                            </div>
+                        `
+                        :''
+                    }
                 </p>
             `;
 
