@@ -12,11 +12,12 @@
         rel="stylesheet">
     <script src="js/maze.js"></script>
     <style>
-        h1, h2 {
+        h1,
+        h2 {
             font-family: Pixelify Sans;
         }
 
-        body{
+        body {
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -46,7 +47,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: flex-end;
-            gap: 10px;            
+            gap: 10px;
         }
 
         .button {
@@ -61,6 +62,11 @@
             justify-content: center;
             user-select: none;
         }
+
+        img:hover {
+            filter: brightness(0.8);
+            transform: translate(1px, 1px);
+        }
     </style>
 </head>
 
@@ -68,11 +74,11 @@
     <div class="flex2">
         <h1>Velkommen til <span style="color: #F64D01">GET Academys</span> lynkurs i programmering!</h1>
         <div class="flex3">
-            <img class="imgbtn" src="img/arrow-left-full.png" />
+            <img class="btn" src="img/arrow-left-full.png" />
             <div class="button">
                 <h1>Level 1</h1>
             </div>
-            <img class="imgbtn" src="img/arrow-right-full.png" />
+            <img class="btn" src="img/arrow-right-full.png" />
         </div>
     </div>
     <div class="flex2">
@@ -89,7 +95,7 @@
         const erVedUtgang = maze.erVedUtgang.bind(maze);
         const allContent = [
             {
-                videoId: 'reaUet6DTvQ', 
+                videoId: 'reaUet6DTvQ',
                 videoText: 'Se videoen for å lære om de innebygde kommandoene <tt>gå()</tt> og <tt>snuHøyre()</tt> - og lære hvordan du kan sette dem sammen til nye kommandoer.',
                 exercise: 'Lag funksjonen <tt>snuVenstre()</tt>. Bruk det du har lært i videoen om hvordan du lager egne kommandoer. Hvor mange ganger må du snu til høyre - for å ha snudd til venstre?',
             },
@@ -105,7 +111,7 @@
                     `
             },
             {
-                videoId: 'L3jSbUG-DdM', 
+                videoId: 'L3jSbUG-DdM',
                 videoText: 'Se videoen for å lære om if-setninger, logiske verdier og sammenligninger.',
                 exercise: `Lag funksjonen <tt>følgVeggenTilHøyre()</tt>. 
                     <ul>
@@ -116,10 +122,10 @@
                 `,
             },
             {
-                videoId: 'oPkHyOg57UQ', 
+                videoId: 'oPkHyOg57UQ',
                 videoText: 'Se videoen for å lære om løkker',
                 exercise: `
-                    Hvis du vil lære mer programmering, les om <a href="https://getacademy.no/">GET Academy</a> og meld deg på!                
+                    Hvis du vil lære mer om programmering, les om <a href="https://getacademy.no/">GET Academy</a> og meld deg på!                
                 `,
             },
         ]
@@ -134,7 +140,7 @@
                 ${getLevelButton(1)}
             `;
 
-            const content = allContent[level-1];
+            const content = allContent[level - 1];
             document.querySelector('.info').innerHTML = /*HTML*/`
                 <h2>Introduksjonsvideo</h2> 
                 <p> 
@@ -145,22 +151,22 @@
                     title="YouTube video player" frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                 </iframe>
-                <h2>Oppgave</h2>
+                <h2>${level < 4 ? 'Oppgave' : 'Fullført minikurs!'}</h2>
                 <p>
                 ${content.exercise}
                 </p>
                 <p>
-                    ${level<4
-                        ? `
+                    ${level < 4
+                    ? `
                             <div style="display: flex; flex-direction: row; align-items: center; gap: 10px">
                                 <div>
-                                    Når du har løst oppgaven, kan du gå videre til level ${level+1}:
+                                    Når du har løst oppgaven, kan du gå videre til level ${level + 1}:
                                 </div>
                                 <div>${getLevelButton(1)}</div>
                             </div>
                         `
-                        :''
-                    }
+                    : ''
+                }
                 </p>
             `;
 
