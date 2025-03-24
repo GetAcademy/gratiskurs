@@ -173,7 +173,7 @@ class MazeCanvas extends HTMLElement {
         const size = model.wallSize + model.cornerSize;
         if (!this.shouldDraw(roomIndex)) {
             const fillStyle = this.ctx.fillStyle;
-            this.ctx.fillStyle = '#ddd';
+            this.ctx.fillStyle = '#508642';
             this.ctx.fillRect(x, y, size, size);
             this.ctx.fillStyle = fillStyle;
             return;
