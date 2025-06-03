@@ -231,6 +231,10 @@ class MazeCanvas extends HTMLElement {
     }
 
     init(){
+        const model = this.model;
+        model.openWalls = {};
+        model.openWalls['opp0'] = true;
+        model.openWalls['opp' + (model.labyrinthSize - 1)] = true;
         this.generateLabyrinth();
         this.drawLabyrinth();
     }
