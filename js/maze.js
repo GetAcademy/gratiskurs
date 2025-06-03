@@ -230,6 +230,11 @@ class MazeCanvas extends HTMLElement {
         return index * model.wallSize + (index + 1) * model.cornerSize;
     }
 
+    init(){
+        this.generateLabyrinth();
+        this.drawLabyrinth();
+    }
+
     snuHøyre() {
         const model = this.model;
         model.character.direction = {
